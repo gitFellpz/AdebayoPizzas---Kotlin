@@ -61,11 +61,18 @@ class MainActivity : AppCompatActivity() {
         val alert = AlertDialog.Builder(this)
         alert.setTitle("Confirmação")
         alert.setMessage("Valor: $valor\nPagamento: $pagamento")
-        alert.setPositiveButton("SIM", DialogInterface.OnClickListener {
-                dialog, which ->
-            Toast.makeText(this@MainActivity, "Pedido Confirmado!",
-                Toast.LENGTH_SHORT).show()
-        })
+        alert.setPositiveButton("SIM") { dialog, which ->
+            val intentDetalhePedido = Intent(this,
+                DetalheDoPedidoActivity::class.java)
+            val pedido = Pedido(
+                binding.etNomeCliente.text.toString(),
+                pizzasSelecionadas,
+                tamanhoSelecionado,
+                pagamento
+            )
+            intentDetalhePedido.putExtra("pedido", pedido)
+            startActivity(intentDetalhePedido)
+        }
         alert.setNegativeButton("NÃO", null)
         alert.show()
 
